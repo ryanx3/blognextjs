@@ -12,7 +12,7 @@ const ptSansCaption = PT_Sans_Caption({ subsets: ['latin'], weight: '700', varia
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className={`${inter.className} ${ptSansCaption.className} relative flex min-h-screen flex-col bg-gray-700 font-inter`}>
-      <Header />
+      <Header />  
       <main className="flex-1 flex flex-col mb-12 mt-10 bg-">{children}</main>
       <Footer />
     </div>
