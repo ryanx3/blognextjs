@@ -1,7 +1,8 @@
 import { LandingPage } from "@/components/templates/landing-page";
-
+import { allPosts } from 'contentlayer/generated'
 export default function Home() {
+  console.log(allPosts)
   return (
-    <LandingPage/>
+    <LandingPage />
   );
 }
