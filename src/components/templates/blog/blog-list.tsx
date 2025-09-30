@@ -1,12 +1,15 @@
-import { Search } from "@/components/search";
-import { useRouter } from "next/router";
-import { PostCard } from "./components/post-card/post-card";
-import { PostGridCard } from "./components/post-grid";
+import { Search } from '@/components/search';
+import { useRouter } from 'next/router';
+import { PostCard } from './components/post-card';
+import { PostGridCard } from './components/post-grid';
 
-export const BlogList = () => {
-  const router = useRouter()
-  const query = router.query.q
-  const pageTitle = query ? `Resultados para a pesquisa: "${query}"` : "Dicas e estratégias para impulsionar seu negócio"
+export function BlogList() {
+  const router = useRouter();
+  const query = router.query.q as string;
+  const pageTitle = query
+    ? `Resultados de busca para "${query}"`
+    : 'Dicas e estratégias para impulsionar seu negócio';
+
   return (
     <div className="flex flex-col py-24 flex-grow h-full">
       <header className="pb-14">
@@ -23,6 +26,7 @@ export const BlogList = () => {
           <Search />
         </div>
       </header>
+
       <PostGridCard>
         <PostCard
           title="Transformando seu negócio em uma loja virtual"
