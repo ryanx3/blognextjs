@@ -1,1 +1,2 @@
-export * from './use-share'
+export * from './use-clipboard/index'
+export * from './use-share/index'

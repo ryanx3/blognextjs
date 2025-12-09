@@ -1,11 +1,15 @@
 import { useCallback, useMemo } from "react"
 import { ShareConfig, SOCIAL_PROVIDERS, SocialProvider } from "./social-providers"
+import { useClipboard } from "../use-clipboard"
+import { Link2 } from "lucide-react"
 
 type useShareProps = ShareConfig & {
   clipboardTimeout: number
 }
 
 export const useShare = ({ title, url, text, clipboardTimeout = 2000 }: useShareProps) => {
+  const { handleCopy, isCopied } = useClipboard({ timeout: clipboardTimeout })
+
   const shareConfig = useMemo(() => (
     {
       url,
@@ -16,6 +20,10 @@ export const useShare = ({ title, url, text, clipboardTimeout = 2000 }: useShare
 
   const share = useCallback((provider: SocialProvider) => {
     try {
+      if (provider === 'clipboard') {
+        return handleCopy(url)
+      }
+
       const providerConfig = SOCIAL_PROVIDERS[provider]
 
       if (!providerConfig) {
@@ -34,7 +42,7 @@ export const useShare = ({ title, url, text, clipboardTimeout = 2000 }: useShare
       console.log(error)
       return false
     }
-  }, [shareConfig])
+  }, [shareConfig, handleCopy, url])
 
   const shareButtons = useMemo(
     () => [
@@ -43,9 +51,14 @@ export const useShare = ({ title, url, text, clipboardTimeout = 2000 }: useShare
         name: provider.name,
         icon: provider.icon,
         action: () => share(key as SocialProvider),
-      })),
+      })), {
+        provider: 'clipboard',
+        name: isCopied ? 'Link copiado' : 'Copiar link',
+        icon: <Link2 className="h-4 w-4"/>,
+        action: () => share('clipboard')
+      },
     ],
-    [share]
+    [share, isCopied]
   );
 
   return {
