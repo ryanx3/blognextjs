@@ -25,7 +25,12 @@
       "contentlayer/generated": [
         "./.contentlayer/generated"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",

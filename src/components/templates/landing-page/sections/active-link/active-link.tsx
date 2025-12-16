@@ -1,23 +1,24 @@
+'use client'
 import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 type ActiveLink = {
   children: React.ReactNode;
 } & LinkProps;
 
 export const ActiveLink = ({ children, href, ...rest }: ActiveLink) => {
-  const router = useRouter();
-  const isCurrentPath =
-    router.asPath === href ||
-    router.asPath === rest.as
+  const linkPath = typeof href === "string" ? href : href.pathname
+  const pathname = usePathname();
+  const isActive = pathname === linkPath || linkPath?.startsWith(`${linkPath}/`)
 
   return (
     <Link
+      {...rest}
       href={href}
       className={cn(
         "text-action-sm font-medium transition-colors hover:text-blue-500",
-        isCurrentPath ? "text-blue-200" : "text-gray-100"
+        isActive ? "text-blue-200" : "text-gray-100"
       )}
     >
       {children}
